@@ -1,17 +1,29 @@
-﻿@{
-    Layout = null;
+﻿@model List<HampusKunskapsKoll.Models.AdressBook>
+
+@{
+    var ajaxOptions = new AjaxOptions
+    {
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "result"
+    };
+    var ajaxOptionsEdit = new AjaxOptions
+    {
+        HttpMethod = "GET",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "result"
+    };
 }
+<h3>The List</h3>
+@foreach (var item in Model)
+{
+    <p>
+        @item.Name
+        @item.Adress
+        @item.PhoneNumber
+        @item.DateUpdate
+        @Ajax.ActionLink($"Delete { item.Name}", "Delete", new { id = item.Id }, ajaxOptions)
+        @Ajax.ActionLink($"Edit {item.Name}", "Edit", new { id = item.Id }, ajaxOptionsEdit)
+    </p>
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    
-    </div>
-</body>
-</html>
+}

@@ -5,44 +5,45 @@ using System.Web;
 using System.Web.Mvc;
 using HampusKunskapsKoll.Models;
 
-namespace KunskapskollMVCLabb.Controllers
+
+namespace HampusKunskapsKoll.Controllers
 {
-    public class AdressBokController : Controller
+    public class AdressBookController : Controller
     {
-        static List<AdressBook_M> adressBok = new List<AdressBook_M>();
+        static List<AdressBook> adressBok = new List<AdressBook>();
         public ActionResult Index()
         {
-            AdressBook_M newAdressBok = new AdressBook_M();
+            AdressBook newAdressBok = new AdressBook();
             return View(newAdressBok);
         }
         [HttpPost]
-        public ActionResult Create(AdressBook_M adressbok)
+        public ActionResult Create(AdressBook adressbok)
         {
-            adressbok.ID = Guid.NewGuid();
+            adressbok.Id = Guid.NewGuid();
             adressbok.DateUpdate = DateTime.Now;
             adressBok.Add(adressbok);
             return PartialView("List", adressBok);
         }
-        public ActionResult ListaAlla()
+        public ActionResult ListAll()
         {
             return PartialView("List", adressBok);
         }
         [HttpPost]
         public ActionResult Delete(Guid id)
         {
-            var delete = adressBok.First(x => x.ID == id);
+            var delete = adressBok.First(x => x.Id == id);
             adressBok.Remove(delete);
             return PartialView("List", adressBok);
         }
-        public ActionResult Edit(AdressBook_M adressbok)
+        public ActionResult Edit(AdressBook adressbok)
         {
-            var edit = adressBok.Find(x => x.ID == adressbok.ID);
+            var edit = adressBok.Find(x => x.Id == adressbok.Id);
             return PartialView("Edit", edit);
         }
         [HttpPost]
-        public ActionResult Edit(AdressBook_M adressbok, FormCollection formcollection)
+        public ActionResult Edit(AdressBook adressbok, FormCollection formcollection)
         {
-            var edit = adressBok.Find(x => x.ID == adressbok.ID);
+            var edit = adressBok.Find(x => x.Id == adressbok.Id);
             edit.Name = adressbok.Name;
             edit.Adress = adressbok.Adress;
             edit.PhoneNumber = adressbok.PhoneNumber;

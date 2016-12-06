@@ -1,17 +1,22 @@
-﻿@{
-    Layout = null;
+﻿@model HampusKunskapsKoll.Models.AdressBook
+
+@{
+    var ajaxOptions = new AjaxOptions
+    {
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "edit"
+    };
 }
+<h2>Edit</h2>
+@using (Ajax.BeginForm("Edit", ajaxOptions))
+{
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title></title>
-</head>
-<body>
-    <div>
-    
-    </div>
-</body>
-</html>
+    @Html.EditorFor(x => x.Name)
+    @Html.EditorFor(x => x.Adress)
+    @Html.EditorFor(x => x.PhoneNumber)
+    <input type="submit" value="Edit" />
+}
+<div id="edit">
+    @{Html.RenderAction("ListAll");}
+</div>
